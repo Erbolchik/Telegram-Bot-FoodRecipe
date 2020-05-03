@@ -4,7 +4,7 @@ bot=telebot.TeleBot('1293189035:AAGMMCKPxcwKrjFjvwzSZOv4KuF49dIy4FI') # токе
 
 @bot.message_handler(commands=["start"])# команда /start
 def start_message(message):
-    user_markup = telebot.types.ReplyKeyboardMarkup(True, False) # создание кнопок
+    user_markup = telebot.types.ReplyKeyboardMarkup(True, True) # создание кнопок
     user_markup.row("🍰Торты", "🍪Печенья","🥧Пироги","🍭Конфеты") # создание 4 разных кнопок
     bot.send_message(message.chat.id, "Добрый день,выберите раздел", reply_markup=user_markup) # вывод сообщения
 
@@ -51,90 +51,52 @@ def value_message(message):
 
 
 
+tortes={"tort1":{"Шоколадный торт":"https://sun9-61.userapi.com/c855232/v855232478/2275a4/2RTxnlmpI-4.jpg"},
+        "tort2":{"Ванильный торт":"https://sun9-39.userapi.com/c855216/v855216050/22cc91/4SQNWBw4S4w.jpg"},
+        "tort3":{"Яблочный  торт":"https://sun9-4.userapi.com/c855216/v855216260/22f552/mfqFiycJcPk.jpg"},
+        "tort4":{"Торт 'БЕАТРИС'":"https://sun9-26.userapi.com/c858020/v858020972/1e2644/agRZ0jELyUs.jpg"}}
 
+cakes={"cake1":{"ШОКОЛАДНО-ОВСЯНОЕ ПЕЧЕНЬЕ":"https://sun9-36.userapi.com/c846419/v846419942/18e95d/-UEi2qyhPIo.jpg"},
+        "cake2":{"Трубочки":"https://sun9-57.userapi.com/c851420/v851420513/1060d/G_EbuPiOWgw.jpg"},
+        "cake3":{"Творожное печенье":"https://sun9-67.userapi.com/c831308/v831308965/ea977/3uM-QfGHNao.jpg"},
+        "cake4":{"Сметанное печенье":"https://sun9-16.userapi.com/c847019/v847019048/2043f/xFg8mN-1uCU.jpg"}}
+
+pies={"pie1":{"Тыквенный пирог":"https://sun3-11.userapi.com/c857220/v857220581/182cbc/SI1KnoFYKPg.jpg"},
+        "pie2":{"Рыбный пирог":"https://sun9-24.userapi.com/c857720/v857720260/1eac78/ellNd-LtWUo.jpg"},
+        "pie3":{"Лимонный пирог":"https://sun9-71.userapi.com/c855224/v855224286/2252d7/ff1g01EMdUA.jpg"},
+        "pie4":{"Малиново-миндальный перевернутый пирог":"https://sun9-29.userapi.com/c857728/v857728575/1cef42/hsHwn_EYtyg.jpg"}}
+
+candys={"candy1":{"Конфеты 'гламур'":"https://sun9-62.userapi.com/c206720/v206720436/2fc80/hFTeKRX2MlU.jpg"},
+        "candy2":{"Плитка шоколада":"https://sun9-9.userapi.com/c855324/v855324989/1f839e/AuuaIsYRuRA.jpg"},
+        "candy3":{"Шоколадные конфеты":"https://sun9-7.userapi.com/c206620/v206620800/8e2fd/Qt6VOzeIC8E.jpg"},
+        "candy4":{"Ассорти":"https://sun3-11.userapi.com/xdA2s16h5Fx1YccUvKpqUrBagGPUpx4Bm6lf-g/dUiqHmWrulw.jpg"}}
 
 @bot.callback_query_handler(func=lambda c:True) # Тут идет алгоритм вывода сообщения исходя из прередущих выводов
 def inline(callback):
-    if(callback.data=='tort1'): # Если пользователь выбирает раздел торты и в нем шоколадный торт
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Шоколадный торт") # Выводим сообщение о том что выбрал пользователь
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-61.userapi.com/c855232/v855232478/2275a4/2RTxnlmpI-4.jpg') # Выводим картинку пользователю
+    for key,value in tortes.items():
+        if(key==callback.data):
+            for key1,value1 in value.items():
+                bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,text=key1)  # Выводим сообщение о том что выбрал пользователь
+                bot.send_photo(chat_id=callback.message.chat.id,photo=value1)
+    for key,value in cakes.items():
+        if (key == callback.data):
+            for key1, value1 in value.items():
+                bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
+                                      text=key1)  # Выводим сообщение о том что выбрал пользователь
+                bot.send_photo(chat_id=callback.message.chat.id, photo=value1)
+    for key,value in candys.items():
+        if (key == callback.data):
+            for key1, value1 in value.items():
+                bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
+                                      text=key1)  # Выводим сообщение о том что выбрал пользователь
+                bot.send_photo(chat_id=callback.message.chat.id, photo=value1)
+    for key,value in pies.items():
+        if (key == callback.data):
+            for key1, value1 in value.items():
+                bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
+                                      text=key1)  # Выводим сообщение о том что выбрал пользователь
+                bot.send_photo(chat_id=callback.message.chat.id, photo=value1)
 
-    elif(callback.data=='tort2'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Ванильный торт")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-39.userapi.com/c855216/v855216050/22cc91/4SQNWBw4S4w.jpg')
-
-    elif (callback.data == 'tort3'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Яблочный  торт")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-4.userapi.com/c855216/v855216260/22f552/mfqFiycJcPk.jpg')
-
-    elif (callback.data == 'tort4'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Торт 'БЕАТРИС'")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-26.userapi.com/c858020/v858020972/1e2644/agRZ0jELyUs.jpg')
-
-    elif (callback.data == 'cake1'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="ШОКОЛАДНО-ОВСЯНОЕ ПЕЧЕНЬЕ")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-36.userapi.com/c846419/v846419942/18e95d/-UEi2qyhPIo.jpg')
-
-    elif (callback.data == 'cake2'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Трубочки")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-57.userapi.com/c851420/v851420513/1060d/G_EbuPiOWgw.jpg')
-
-    elif (callback.data == 'cake3'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Творожное печенье")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-67.userapi.com/c831308/v831308965/ea977/3uM-QfGHNao.jpg')
-
-    elif (callback.data == 'cake4'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Сметанное печенье")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-16.userapi.com/c847019/v847019048/2043f/xFg8mN-1uCU.jpg')
-
-    elif (callback.data == 'pie1'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Тыквенный пирог")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun3-11.userapi.com/c857220/v857220581/182cbc/SI1KnoFYKPg.jpg')
-
-    elif (callback.data == 'pie2'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Рыбный пирог")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-24.userapi.com/c857720/v857720260/1eac78/ellNd-LtWUo.jpg')
-
-    elif (callback.data == 'pie3'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Лимонный пирог")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-71.userapi.com/c855224/v855224286/2252d7/ff1g01EMdUA.jpg')
-
-    elif (callback.data == 'pie4'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Малиново-миндальный перевернутый пирог")
-        bot.send_photo(chat_id=callback.message.chat.id, photo='https://sun9-29.userapi.com/c857728/v857728575/1cef42/hsHwn_EYtyg.jpg')
-
-    elif (callback.data == 'candy1'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Конфеты 'гламур'")
-        bot.send_photo(chat_id=callback.message.chat.id,
-                       photo='https://sun9-62.userapi.com/c206720/v206720436/2fc80/hFTeKRX2MlU.jpg')
-    elif (callback.data == 'candy2'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Плитка шоколада")
-        bot.send_photo(chat_id=callback.message.chat.id,
-                       photo='https://sun9-9.userapi.com/c855324/v855324989/1f839e/AuuaIsYRuRA.jpg')
-    elif (callback.data == 'candy3'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Шоколадные конфеты")
-        bot.send_photo(chat_id=callback.message.chat.id,
-                       photo='https://sun9-7.userapi.com/c206620/v206620800/8e2fd/Qt6VOzeIC8E.jpg')
-    elif (callback.data == 'candy4'):
-        bot.edit_message_text(chat_id=callback.message.chat.id, message_id=callback.message.message_id,
-                              text="Ассорти")
-        bot.send_photo(chat_id=callback.message.chat.id,
-                       photo='https://sun3-11.userapi.com/xdA2s16h5Fx1YccUvKpqUrBagGPUpx4Bm6lf-g/dUiqHmWrulw.jpg')
 
 
 bot.polling() # Отправка сообщения
